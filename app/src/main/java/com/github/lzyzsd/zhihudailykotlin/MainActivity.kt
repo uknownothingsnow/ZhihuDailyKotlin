@@ -77,9 +77,9 @@ public class MainActivity : AppCompatActivity() {
 
     private fun setupViewPager(viewPager: ViewPager) {
         val adapter = Adapter(getSupportFragmentManager())
-        adapter.addFragment(Fragment(), "Category 1")
-        adapter.addFragment(Fragment(), "Category 2")
-        adapter.addFragment(Fragment(), "Category 3")
+        adapter.addFragment(PostListFragment(), "Category 1")
+        adapter.addFragment(PostListFragment(), "Category 2")
+        adapter.addFragment(PostListFragment(), "Category 3")
         viewPager?.setAdapter(adapter)
     }
 
