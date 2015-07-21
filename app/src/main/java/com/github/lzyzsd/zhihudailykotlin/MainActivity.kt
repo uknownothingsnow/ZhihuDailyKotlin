@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.DrawerLayout
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -25,12 +26,15 @@ import java.util.*
  */
 public class MainActivity : AppCompatActivity() {
     private var mDrawerLayout: DrawerLayout? = null
-    private var recyclerView : RecyclerView? = null
+    private var recyclerView: RecyclerView? = null
+    private var swipeRefreshLayout: SwipeRefreshLayout? = null
+
     private var storyList = StoryList()
     private val dataCallback = Runnable { ->
         val adapter = (recyclerView?.getAdapter() as StoryListAdapter)
         adapter.stories = storyList.stories!!;
         adapter.notifyDataSetChanged()
+        swipeRefreshLayout?.setRefreshing(false);
     }
     private val handler = Handler()
 
@@ -53,6 +57,9 @@ public class MainActivity : AppCompatActivity() {
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         setupDrawerContent(navigationView)
 
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout) as SwipeRefreshLayout
+        swipeRefreshLayout?.setOnRefreshListener{ -> fetchData()}
+
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View) {
@@ -69,7 +76,12 @@ public class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        fetchData()
+    }
+
+    private fun fetchData() {
         Thread(Runnable {
+            swipeRefreshLayout?.setRefreshing(true);
             storyList = MyRetrofitAdapter.restApi.getPostList();
             handler.post(dataCallback)
         }).start()
