@@ -1,7 +1,6 @@
 package com.github.lzyzsd.zhihudailykotlin
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
