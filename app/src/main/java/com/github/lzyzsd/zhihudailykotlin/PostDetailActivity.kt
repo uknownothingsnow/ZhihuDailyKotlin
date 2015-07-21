@@ -48,6 +48,6 @@ public class PostDetailActivity : AppCompatActivity() {
 
     private fun loadBackdrop() {
         val imageView = findViewById(R.id.backdrop) as ImageView
-        Glide.with(this).load(Post.getRandomCheeseDrawable()).centerCrop().into(imageView)
+        Glide.with(this).load("").centerCrop().into(imageView)
     }
 }

@@ -32,8 +32,8 @@ public class PostListFragment : Fragment() {
     }
     private val handler = Handler()
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_post_list, container, false);
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_post_list, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerview) as RecyclerView
         setupRecyclerView(recyclerView!!)
@@ -51,6 +51,7 @@ public class PostListFragment : Fragment() {
     private fun setupRecyclerView(recyclerView: RecyclerView) {
         recyclerView.setLayoutManager(LinearLayoutManager(recyclerView.getContext()))
         recyclerView.setAdapter(SimpleStringRecyclerViewAdapter(getActivity()))
+        recyclerView.addItemDecoration(DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST))
     }
 
     override fun onDestroy() {
@@ -91,8 +92,9 @@ public class PostListFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.boundString = stories.get(position).title
-            holder.textView.setText(stories.get(position).title)
+            val story = stories.get(position)
+            holder.boundString = story.title
+            holder.textView.setText(story.title)
 
             holder.view.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View) {
@@ -104,7 +106,7 @@ public class PostListFragment : Fragment() {
                 }
             })
 
-            Glide.with(holder.imageView.getContext()).load(Post.getRandomCheeseDrawable()).fitCenter().into(holder.imageView)
+            Glide.with(holder.imageView.getContext()).load(story.images!![0]!!).fitCenter().into(holder.imageView)
         }
 
         override fun getItemCount(): Int {
