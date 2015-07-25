@@ -22,7 +22,6 @@ public class StoryListAdapter(context: Context) : RecyclerView.Adapter<StoryList
     private val background: Int
 
     public class ViewHolder(public val view: View) : RecyclerView.ViewHolder(view) {
-        public var boundString: String? = null
         public val imageView: ImageView
         public val textView: TextView
 
@@ -49,14 +48,13 @@ public class StoryListAdapter(context: Context) : RecyclerView.Adapter<StoryList
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val story = stories.get(position)
-        holder.boundString = story.title
         holder.textView.setText(story.title)
 
         holder.view.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
                 val context = v.getContext()
                 val intent = Intent(context, javaClass<PostDetailActivity>())
-                intent.putExtra(PostDetailActivity.EXTRA_NAME, holder.boundString)
+                intent.putExtra(PostDetailActivity.EXTRA_NAME, stories.get(holder.getAdapterPosition()))
 
                 context.startActivity(intent)
             }
