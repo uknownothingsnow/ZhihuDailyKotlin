@@ -11,13 +11,13 @@ public data class Story : Parcelable {
 
     var images: List<String> = ArrayList<String>()
     var type: Int = -1
-    var id: Int = -1
+    var id: Long = -1
     var title: String = ""
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeStringList(images)
         dest.writeInt(type)
-        dest.writeInt(id)
+        dest.writeLong(id)
         dest.writeString(title)
     }
 
@@ -31,7 +31,7 @@ public data class Story : Parcelable {
                 val story = Story()
                 parcelIn.readStringList(story.images)
                 story.type = parcelIn.readInt()
-                story.id = parcelIn.readInt()
+                story.id = parcelIn.readLong()
                 story.title = parcelIn.readString()
 
                 return story

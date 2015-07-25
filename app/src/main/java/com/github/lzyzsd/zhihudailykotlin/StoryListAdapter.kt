@@ -7,6 +7,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebSettings
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -23,15 +24,15 @@ public class StoryListAdapter(context: Context) : RecyclerView.Adapter<StoryList
 
     public class ViewHolder(public val view: View) : RecyclerView.ViewHolder(view) {
         public val imageView: ImageView
-        public val textView: TextView
+        public val titleTextView: TextView
 
         init {
             imageView = view.findViewById(R.id.avatar) as ImageView
-            textView = view.findViewById(android.R.id.text1) as TextView
+            titleTextView = view.findViewById(android.R.id.text1) as TextView
         }
 
         override fun toString(): String {
-            return super.toString() + " '" + textView.getText()
+            return super.toString() + " '" + titleTextView.getText()
         }
     }
 
@@ -48,13 +49,13 @@ public class StoryListAdapter(context: Context) : RecyclerView.Adapter<StoryList
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val story = stories.get(position)
-        holder.textView.setText(story.title)
+        holder.titleTextView.setText(story.title)
 
         holder.view.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
                 val context = v.getContext()
-                val intent = Intent(context, javaClass<PostDetailActivity>())
-                intent.putExtra(PostDetailActivity.EXTRA_NAME, stories.get(holder.getAdapterPosition()))
+                val intent = Intent(context, javaClass<StoryDetailActivity>())
+                intent.putExtra(StoryDetailActivity.EXTRA_NAME, stories.get(holder.getAdapterPosition()))
 
                 context.startActivity(intent)
             }
