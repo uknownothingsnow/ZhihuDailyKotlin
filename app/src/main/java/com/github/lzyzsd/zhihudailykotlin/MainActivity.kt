@@ -80,8 +80,8 @@ public class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchData() {
+        swipeRefreshLayout?.setRefreshing(true);
         Thread(Runnable {
-            swipeRefreshLayout?.setRefreshing(true);
             storyList = MyRetrofitAdapter.restApi.getPostList();
             handler.post(dataCallback)
         }).start()
